@@ -1,0 +1,1 @@
+extension CustomInt on int {  bool toBool() => this == 1;}
