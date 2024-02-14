@@ -184,5 +184,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.0"
+  widgets_ui:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "212a99d6a11e400c54b8bc3099eeac4fbcd2e781"
+      url: "https://github.com/rendondeveloper/WidgetsUi.git"
+    source: git
+    version: "1.0.0+1"
 sdks:
   dart: ">=3.2.3 <4.0.0"
