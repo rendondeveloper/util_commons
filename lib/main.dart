@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:widgets_ui/widget/empty/empty_state_simple_widget.dart';
 
 void main() => runApp(const TestTest());
 
@@ -13,6 +12,6 @@ class TestTest extends StatefulWidget {
 class _TestTestState extends State<TestTest> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home:EmptyStateSimpleWidget(text: Text("EMTY"), icon: Icon(Icons.add)));
+    return MaterialApp(home: Container());
   }
 }
