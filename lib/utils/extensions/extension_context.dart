@@ -1,1 +1,1 @@
-import 'package:flutter/material.dart';extension CustomContext on BuildContext {  ThemeData getThemeData() => Theme.of(this);  MediaQueryData getMediaQuery() => MediaQuery.of(this);}
+import 'package:flutter/material.dart';extension CustomContext on BuildContext {  ThemeData getThemeData() => Theme.of(this);  MediaQueryData getMediaQuery() => MediaQuery.of(this);  void showSnackBarMessage(Text text) {    ScaffoldMessenger.of(this).showSnackBar(SnackBar(      content: text,    ));  }}
