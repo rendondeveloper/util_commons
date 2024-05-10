@@ -7,10 +7,10 @@ import 'package:util_commons/utils/network/config/response/response.dart';
 
 import 'api/baseapi.dart';
 
-String baseUrl = "rallysystemmedia.azurewebsites.net";
-
 class ApiConnect extends BaseApi {
-  Uri? urlDynamic;
+  String? baseUrl;
+
+  ApiConnect(this.baseUrl);
 
   Future<ResponseBase> executeGet(
       {required String path,
@@ -18,7 +18,7 @@ class ApiConnect extends BaseApi {
       Map<String, String>? headers,
       String? key,
       String? otherAuthority}) async {
-    final uri = Uri.https(otherAuthority ?? baseUrl, path, params);
+    final uri = Uri.https(otherAuthority ?? baseUrl ?? "", path, params);
     ResponseBase responseData = await super.connectionInternetAvailable();
 
     if (!responseData.isSuccess) {
@@ -49,7 +49,7 @@ class ApiConnect extends BaseApi {
 
   Future<ResponseBase> executePost(String request,
       {RequestBase? requestData, String? otherAuthority, String? path}) async {
-    final uri = Uri.https(otherAuthority ?? baseUrl);
+    final uri = Uri.https(otherAuthority ?? baseUrl ?? "");
     final ResponseBase responseData = await super.connectionInternetAvailable();
 
     if (!responseData.isSuccess) {
@@ -94,7 +94,7 @@ class ApiConnect extends BaseApi {
       Map<String, String>? headers,
       String? key,
       String? otherAuthority}) async {
-    final uri = Uri.https(otherAuthority ?? baseUrl, path);
+    final uri = Uri.https(otherAuthority ?? baseUrl ?? "", path);
     ResponseBase responseData = await super.connectionInternetAvailable();
 
     if (!responseData.isSuccess) {
