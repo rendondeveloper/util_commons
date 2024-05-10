@@ -1,6 +1,6 @@
-abstract class Pair<T, K>{
+class Pair<T, K> {
   final T? right;
   final K? left;
 
-  Pair(this.left, this.right);
+  Pair({required this.left, required this.right});
 }
