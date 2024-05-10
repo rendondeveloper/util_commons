@@ -1,1 +1,4 @@
-import 'dart:ffi';extension CustomBool on bool {  int toInt() => this == true ? 1 : 0;}
+
+extension CustomBool on bool {
+  int toInt() => this == true ? 1 : 0;
+}

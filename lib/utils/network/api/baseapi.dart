@@ -1,7 +1,8 @@
 import 'dart:convert' as convert;
 import 'dart:developer';
 import 'dart:io';
-import 'package:rally_system_deluxe/commons/const/network/config/response/response.dart';
+
+import 'package:util_commons/utils/network/config/response/response.dart';
 
 class BaseApi {
   final int timeOutMinutes = 1;
