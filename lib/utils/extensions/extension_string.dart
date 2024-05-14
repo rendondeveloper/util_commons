@@ -33,7 +33,7 @@ extension CustomStringNull on String? {
     }
   }
 
-  void let(Function(String) invoke) {
+  void let(Function(String it) invoke) {
     if (this != null) {
       invoke(this!);
     }
