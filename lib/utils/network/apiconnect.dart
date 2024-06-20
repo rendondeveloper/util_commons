@@ -42,6 +42,7 @@ class ApiConnect extends BaseApi {
       "RESPONSE BODY-> ${response.body}".log();
       if (response.body.isNotEmpty && super.isValidJson(response.body)) {
         final format = api as ResponseToApi;
+        final format2 = api as T;
         return ApiResponse<T>(
             code: response.statusCode,
             body: response.body,
