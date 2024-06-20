@@ -54,6 +54,7 @@ class ApiConnect extends BaseApi {
             error: FormatWrongJson());
       }
     } catch (ex) {
+      "RESPONSE EX -> $ex".log();
       if (ex is TimeoutException) {
         return ApiResponse(code: 0, error: TimeoutError());
       } else {
