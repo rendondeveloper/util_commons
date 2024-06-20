@@ -1,3 +1,8 @@
+abstract class ResponseToApiD {
+  dynamic fromJson(dynamic data);
+}
+
+
 
 abstract class ResponseToApi<T> {
   T fromJson(dynamic data);
