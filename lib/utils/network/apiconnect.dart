@@ -1,9 +1,14 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:util_commons/utils/extensions/extension_string.dart';
+import 'package:util_commons/utils/network/config/response/api_request.dart';
+import 'package:util_commons/utils/network/config/response/api_response.dart';
+import 'package:util_commons/utils/network/config/response/api_response_error.dart';
 import 'package:util_commons/utils/network/config/response/request_base.dart';
 import 'package:util_commons/utils/network/config/response/response.dart';
+import 'package:util_commons/utils/network/config/response/response_to_base.dart';
 
 import 'api/baseapi.dart';
 
@@ -11,6 +16,41 @@ class ApiConnect extends BaseApi {
   String? baseUrl;
 
   ApiConnect(this.baseUrl);
+
+  Future<ApiResponse<T>> executePost2<T>(
+      {required ApiRequest request,
+      String? otherAuthority,
+      String? path,
+      Map<String, String>? headers,
+      ResponseToApi? responseData}) async {
+    final uri = Uri.https(otherAuthority ?? baseUrl ?? "");
+
+    final internetavailable = await super.connectionInternetAvailable();
+    if (!internetavailable.isSuccess) {
+      return ApiResponse(code: 0, error: IntertnetNotAvailable());
+    }
+    try {
+      final response =
+          await http.post(uri, headers: headers, body: request.toJson());
+      if (response.body.isNotEmpty) {
+        return ApiResponse<T>(
+            code: response.statusCode,
+            body: response.body,
+            data: responseData?.fromJson(response.body));
+      } else {
+        return ApiResponse<T>(
+            code: response.statusCode,
+            body: response.body,
+            error: FormatWrongJson());
+      }
+    } catch (ex) {
+      if (ex is TimeoutException) {
+        return ApiResponse(code: 0, error: TimeoutError());
+      } else {
+        return ApiResponse(code: 0, error: ErrorServerError());
+      }
+    }
+  }
 
   Future<ResponseBase> executeGet(
       {required String path,
