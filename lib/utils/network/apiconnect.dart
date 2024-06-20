@@ -21,8 +21,7 @@ class ApiConnect extends BaseApi {
       {required ApiRequest request,
       String? otherAuthority,
       String? path,
-      Map<String, String>? headers,
-      ResponseToApi? responseData}) async {
+      Map<String, String>? headers}) async {
     final uri = Uri.https(otherAuthority ?? baseUrl ?? "");
 
     final internetavailable = await super.connectionInternetAvailable();
@@ -33,10 +32,11 @@ class ApiConnect extends BaseApi {
       final response =
           await http.post(uri, headers: headers, body: request.toJson());
       if (response.body.isNotEmpty) {
+        final baseData = T is ResponseToApi ? T as ResponseToApi : null;
         return ApiResponse<T>(
             code: response.statusCode,
             body: response.body,
-            data: responseData?.fromJson(response.body));
+            data: baseData?.fromJson(response.body));
       } else {
         return ApiResponse<T>(
             code: response.statusCode,
