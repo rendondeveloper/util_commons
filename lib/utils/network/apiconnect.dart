@@ -22,7 +22,7 @@ class ApiConnect extends BaseApi {
       String? otherAuthority,
       String? path,
       Map<String, String>? headers}) async {
-    final uri = Uri.https(otherAuthority ?? baseUrl ?? "");
+    final uri = Uri.https(otherAuthority ?? baseUrl ?? "", path ?? "");
 
     "REQUEST -> POST".log();
     "REQUEST -> ${request.toJson()}".log();
