@@ -17,12 +17,12 @@ class ApiConnect extends BaseApi {
 
   ApiConnect(this.baseUrl);
 
-  Future<ApiResponse<T>> executePost2<T extends ResponseToApi<T>>(
+  Future<ApiResponse<T>> executePost2<T>(
       {required ApiRequest request,
       String? otherAuthority,
       String? path,
       Map<String, String>? headers,
-      ResponseToApi? api}) async {
+      dynamic api}) async {
     final uri = Uri.https(otherAuthority ?? baseUrl ?? "", path ?? "");
 
     "REQUEST -> POST".log();
@@ -41,12 +41,13 @@ class ApiConnect extends BaseApi {
       "RESPONSE CODE-> ${response.statusCode}".log();
       "RESPONSE BODY-> ${response.body}".log();
       if (response.body.isNotEmpty && super.isValidJson(response.body)) {
-        final value = T as ResponseToApi;
+        //final ResponseToApi value = T;
+        final ResponseToApi value2 = api as ResponseToApi;
 
         return ApiResponse<T>(
             code: response.statusCode,
             body: response.body,
-            data: value.fromJson(response.body));
+            data: value2.fromJson(response.body));
       } else {
         return ApiResponse<T>(
             code: response.statusCode,
