@@ -24,13 +24,21 @@ class ApiConnect extends BaseApi {
       Map<String, String>? headers}) async {
     final uri = Uri.https(otherAuthority ?? baseUrl ?? "");
 
+    "REQUEST -> POST".log();
+    "REQUEST -> ${request.toJson()}".log();
+    "REQUEST URL -> ${uri.toString()}".log();
+
     final internetavailable = await super.connectionInternetAvailable();
+
+    "REQUEST internetavailable -> $internetavailable}".log();
     if (!internetavailable.isSuccess) {
       return ApiResponse(code: 0, error: IntertnetNotAvailable());
     }
     try {
       final response =
           await http.post(uri, headers: headers, body: request.toJson());
+      "RESPONSE CODE-> ${response.statusCode}".log();
+      "RESPONSE BODY-> ${response.body}".log();
       if (response.body.isNotEmpty && super.isValidJson(response.body)) {
         final baseData = T is ResponseToApi ? T as ResponseToApi : null;
         return ApiResponse<T>(
