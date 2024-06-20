@@ -31,7 +31,7 @@ class ApiConnect extends BaseApi {
     try {
       final response =
           await http.post(uri, headers: headers, body: request.toJson());
-      if (response.body.isNotEmpty) {
+      if (response.body.isNotEmpty && super.isValidJson(response.body)) {
         final baseData = T is ResponseToApi ? T as ResponseToApi : null;
         return ApiResponse<T>(
             code: response.statusCode,

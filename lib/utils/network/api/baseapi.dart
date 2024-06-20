@@ -96,4 +96,13 @@ class BaseApi {
       return false;
     }
   }
+
+  bool isValidJson(String json) {
+    try {
+      convert.jsonDecode(json);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }
