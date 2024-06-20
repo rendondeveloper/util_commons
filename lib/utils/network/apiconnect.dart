@@ -17,7 +17,7 @@ class ApiConnect extends BaseApi {
 
   ApiConnect(this.baseUrl);
 
-  Future<ApiResponse> executePost2(
+  Future<ApiResponse<T>> executePost2<T>(
       {required ApiRequest request,
       String? otherAuthority,
       String? path,
@@ -42,12 +42,12 @@ class ApiConnect extends BaseApi {
       "RESPONSE BODY-> ${response.body}".log();
       if (response.body.isNotEmpty && super.isValidJson(response.body)) {
         final format = api as ResponseToApi;
-        return ApiResponse(
+        return ApiResponse<T>(
             code: response.statusCode,
             body: response.body,
             data: format.fromJson(response.body));
       } else {
-        return ApiResponse(
+        return ApiResponse<T>(
             code: response.statusCode,
             body: response.body,
             error: FormatWrongJson());
