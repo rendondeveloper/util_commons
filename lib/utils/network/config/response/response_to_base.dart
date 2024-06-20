@@ -1,13 +1,14 @@
+
 abstract class ResponseToApi<T> {
   T fromJson(dynamic data);
 }
 
-abstract class ResponseToApiMap<T> implements ResponseToApi {
+abstract class ResponseToApiMap<T> implements ResponseToApi<T> {
   @override
   T fromJson(dynamic map);
 }
 
-abstract class ResponseToApiList<T> implements ResponseToApi {
+abstract class ResponseToApiList<T> implements ResponseToApi<T> {
   @override
   T fromJson(dynamic map);
 }
