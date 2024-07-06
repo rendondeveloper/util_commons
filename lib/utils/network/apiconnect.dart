@@ -61,6 +61,58 @@ class ApiConnect extends BaseApi {
       }
     }
   }
+/*
+      required String path,
+      Map<String, dynamic>? params,
+      Map<String, String>? headers,
+      String? key,
+      String? otherAuthority*/
+
+  Future<ApiResponse<T>> executeGet2<T>(
+      {required String path,
+      Map<String, dynamic>? params,
+      Map<String, String>? headers,
+      String? key,
+      String? otherAuthority,
+      dynamic api}) async {
+    final uri = Uri.https(otherAuthority ?? baseUrl ?? "", path);
+
+    "REQUEST -> GET".log();
+    "REQUEST -> $path".log();
+    "REQUEST URL -> ${uri.toString()}".log();
+
+    final internetavailable = await super.connectionInternetAvailable();
+
+    "REQUEST internetavailable -> $internetavailable}".log();
+    if (!internetavailable.isSuccess) {
+      return ApiResponse(code: 0, error: IntertnetNotAvailable());
+    }
+    try {
+      final response =
+          await http.get(uri, headers: headers);
+      "RESPONSE CODE-> ${response.statusCode}".log();
+      "RESPONSE BODY-> ${response.body}".log();
+      if (response.body.isNotEmpty && super.isValidJson(response.body)) {
+        final format = api as ResponseToApi;
+        return ApiResponse<T>(
+            code: response.statusCode,
+            body: response.body,
+            data: format.fromJson(response.body));
+      } else {
+        return ApiResponse<T>(
+            code: response.statusCode,
+            body: response.body,
+            error: FormatWrongJson());
+      }
+    } catch (ex) {
+      "RESPONSE EX -> $ex".log();
+      if (ex is TimeoutException) {
+        return ApiResponse(code: 0, error: TimeoutError());
+      } else {
+        return ApiResponse(code: 0, error: ErrorServerError());
+      }
+    }
+  }
 
   Future<ResponseBase> executeGet(
       {required String path,
