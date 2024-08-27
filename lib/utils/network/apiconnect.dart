@@ -22,6 +22,7 @@ class ApiConnect extends BaseApi {
       String? otherAuthority,
       String? path,
       Map<String, String>? headers,
+      int? timeOut,
       dynamic api}) async {
     final uri = Uri.https(otherAuthority ?? baseUrl ?? "", path ?? "");
 
@@ -37,7 +38,9 @@ class ApiConnect extends BaseApi {
     }
     try {
       final response =
-          await http.post(uri, headers: headers, body: request.toJson());
+          await http
+          .post(uri, headers: headers, body: request.toJson())
+          .timeout(Duration(seconds: timeOut ?? 60)); 
       "RESPONSE CODE-> ${response.statusCode}".log();
       "RESPONSE BODY-> ${response.body}".log();
       if (response.body.isNotEmpty && super.isValidJson(response.body)) {
@@ -61,19 +64,14 @@ class ApiConnect extends BaseApi {
       }
     }
   }
-/*
-      required String path,
-      Map<String, dynamic>? params,
-      Map<String, String>? headers,
-      String? key,
-      String? otherAuthority*/
 
   Future<ApiResponse<T>> executeGet2<T>(
       {required String path,
       Map<String, dynamic>? params,
       Map<String, String>? headers,
       String? key,
-      String? otherAuthority,
+      String? otherAuthority,      
+      int? timeOut,
       dynamic api}) async {
     final uri = Uri.https(otherAuthority ?? baseUrl ?? "", path);
 
@@ -89,7 +87,9 @@ class ApiConnect extends BaseApi {
     }
     try {
       final response =
-          await http.get(uri, headers: headers);
+          await http
+          .get(uri, headers: headers)
+          .timeout(Duration(seconds: timeOut ?? 60));      
       "RESPONSE CODE-> ${response.statusCode}".log();
       "RESPONSE BODY-> ${response.body}".log();
       if (response.body.isNotEmpty && super.isValidJson(response.body)) {
